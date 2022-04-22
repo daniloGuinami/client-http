@@ -1,28 +1,93 @@
-const express = require('express');
-const bodyParser = require('body-parser')
+// const redis  =require('redis');
+const axios = require('axios');
 
-const app = express();
+// const REDIS_SOCKET = {
+//     host: '',
+//     port: 6379,
+// };
+//
+// async function getProds() {
+//     const clientRedis = redis.createClient({
+//         socket: REDIS_SOCKET
+//     });
+//
+//     await clientRedis.connect();
+//
+//     const iterator = clientRedis.scanIterator({
+//         MATCH: 'product:*',
+//         COUNT: 5,
+//     });
+//
+//     let result = '';
+//     let count = 0;
+//
+//     setInterval(() => {
+//         console.log(count);
+//     }, 5000);
+//
+//     for await (const key of iterator) {
+//         result += `${key}\n`;
+//         console.log(result);
+//         count++;
+//     }
+//
+//     console.log(result);
+//
+//     // fs.writeFileSync('productKeys', result);
+//
+//     await clientRedis.disconnect();
+// }
+//
+// getProds().catch(console.log);
 
-app.use(bodyParser.urlencoded({ extended: false }));
-app.use(bodyParser.json());
+(async () => {
+    const url = '';
+    const data = {
+        "action": "product.updated",
+        "data": {
+            "resource": {
+                "identifier": "931980513",
+            }
+        }
+    };
+    const headers = {
+        'apiKey': '',
+    };
 
-const methods = [
-    'GET', 'POST', 'PATCH', 'PUT', 'DELETE',
-];
-
-for (const method of methods) {
-    app[method.toLowerCase()]('/', (req, res) => {
-        console.log(method, {
-            query: req.query,
-            body: req.body,
+    let response = await axios.post(url, data, { headers })
+        .then(response => {
+            return response;
+        })
+        .catch(error => {
+            console.log('error');
+            console.log(error);
         });
 
-        res.send('It\'s working');
-    });
-}
+    console.log('response');
+    console.log(response);
+})();
 
-const port = process.env.PORT || 5050;
 
-app.listen(port, () => {
-    console.log(`Listening on port ${port}`);
-});
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
